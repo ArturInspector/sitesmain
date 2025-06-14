@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Терминал - CodeNomad.kg</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+        .terminal {
+            background-color: #000000;
+            border: 1px solid #39ff14;
+            border-radius: 4px;
+        }
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #39ff14;
+            outline: none;
+            width: 100%;
+        }
+        .terminal-output {
+            color: #39ff14;
+            white-space: pre-wrap;
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #39ff14;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="fixed w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-[#39ff14] flex items-center">
+                    <img src="images/logo.png" 
+                         alt="CodeNomad.kg" 
+                         class="h-8 inline-block mr-2">
+                    CodeNomad.kg
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-green transition">Главная</a>
+                    <a href="courses.html" class="text-white hover:text-neon-green transition">Курсы</a>
+                    <a href="terminal.html" class="text-white hover:text-neon-green transition">Терминал</a>
+                    <a href="about.html" class="text-white hover:text-neon-green transition">О нас</a>
+                    <a href="reviews.html" class="text-white hover:text-neon-green transition">Отзывы</a>
+                    <a href="contacts.html" class="text-white hover:text-neon-green transition">Контакты</a>
+                </div>
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Мобильное меню -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="py-4 space-y-4">
+                    <a href="index.html" class="block text-white hover:text-neon-green transition px-4 py-2">Главная</a>
+                    <a href="courses.html" class="block text-white hover:text-neon-green transition px-4 py-2">Курсы</a>
+                    <a href="terminal.html" class="block text-white hover:text-neon-green transition px-4 py-2">Терминал</a>
+                    <a href="about.html" class="block text-white hover:text-neon-green transition px-4 py-2">О нас</a>
+                    <a href="reviews.html" class="block text-white hover:text-neon-green transition px-4 py-2">Отзывы</a>
+                    <a href="contacts.html" class="block text-white hover:text-neon-green transition px-4 py-2">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Терминал -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold mb-8 text-center text-[#39ff14]">Интерактивный терминал</h1>
+                <div class="terminal p-4 h-[600px] overflow-y-auto">
+                    <div class="terminal-output mb-4">
+                        Добро пожаловать в терминал CodeNomad.kg!
+                        Введите 'help' для просмотра доступных команд.
+                    </div>
+                    <div class="terminal-output" id="output"></div>
+                    <div class="flex items-center">
+                        <span class="text-[#39ff14] mr-2">$</span>
+                        <input type="text" class="terminal-input" id="input" autofocus>
+                        <span class="cursor ml-1"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Мобильное меню
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        // Добавляем проверку на существование элементов
+        if (!mobileMenuButton || !mobileMenu) {
+            console.error('Элементы мобильного меню не найдены');
+        } else {
+            mobileMenuButton.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                mobileMenu.classList.toggle('hidden');
+                
+                // Анимация иконки меню
+                if (isMenuOpen) {
+                    mobileMenuButton.innerHTML = `
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    `;
+                } else {
+                    mobileMenuButton.innerHTML = `
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    `;
+                }
+            });
+        }
+
+        // Закрытие меню при клике на ссылку
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                isMenuOpen = false;
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            });
+        });
+
+        const courses = {
+            frontend: {
+                name: 'Frontend разработка',
+                price: '24 000 KGS',
+                duration: '6 месяцев',
+                description: 'HTML, CSS, JavaScript, React'
+            },
+            backend: {
+                name: 'Backend разработка',
+                price: '28 000 KGS',
+                duration: '8 месяцев',
+                description: 'Python, Django, PostgreSQL'
+            },
+            mobile: {
+                name: 'Мобильная разработка',
+                price: '32 000 KGS',
+                duration: '7 месяцев',
+                description: 'Flutter, Dart, Firebase'
+            },
+            devops: {
+                name: 'DevOps',
+                price: '36 000 KGS',
+                duration: '6 месяцев',
+                description: 'Docker, Kubernetes, AWS'
+            },
+            'data-science': {
+                name: 'Data Science',
+                price: '34 000 KGS',
+                duration: '8 месяцев',
+                description: 'Python, ML, Data Analysis'
+            },
+            qa: {
+                name: 'QA Engineering',
+                price: '20 000 KGS',
+                duration: '4 месяца',
+                description: 'Manual Testing, Automation'
+            }
+        };
+
+        const terminal = {
+            input: document.getElementById('input'),
+            output: document.getElementById('output'),
+            history: [],
+            historyIndex: -1,
+
+            init() {
+                // Проверяем наличие необходимых элементов
+                if (!this.input || !this.output) {
+                    console.error('Элементы терминала не найдены');
+                    return;
+                }
+
+                this.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        this.executeCommand(this.input.value);
+                        this.input.value = '';
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.navigateHistory('up');
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        this.navigateHistory('down');
+                    }
+                });
+
+                // Добавляем фокус на input при клике в терминале
+                this.output.addEventListener('click', () => {
+                    this.input.focus();
+                });
+            },
+
+            executeCommand(command) {
+                if (!command.trim()) return;
+
+                this.addToHistory(command);
+                this.print(`$ ${command}`);
+
+                const [cmd, ...args] = command.toLowerCase().split(' ');
+
+                switch (cmd) {
+                    case 'help':
+                        this.print(`
+Доступные команды:
+help - показать это сообщение
+list - показать список курсов
+info [id] - показать информацию о курсе
+price [id] - показать цену курса
+contact - показать контактную информацию
+clear - очистить терминал
+                        `);
+                        break;
+
+                    case 'list':
+                        this.print('Доступные курсы:');
+                        Object.keys(courses).forEach(id => {
+                            this.print(`- ${courses[id].name} (${id})`);
+                        });
+                        break;
+
+                    case 'info':
+                        if (!args[0]) {
+                            this.print('Ошибка: укажите ID курса');
+                            return;
+                        }
+                        const course = courses[args[0]];
+                        if (!course) {
+                            this.print('Ошибка: курс не найден');
+                            return;
+                        }
+                        this.print(`
+Курс: ${course.name}
+Длительность: ${course.duration}
+Описание: ${course.description}
+Цена: ${course.price}
+                        `);
+                        break;
+
+                    case 'price':
+                        if (!args[0]) {
+                            this.print('Ошибка: укажите ID курса');
+                            return;
+                        }
+                        const coursePrice = courses[args[0]];
+                        if (!coursePrice) {
+                            this.print('Ошибка: курс не найден');
+                            return;
+                        }
+                        this.print(`Цена курса ${coursePrice.name}: ${coursePrice.price}`);
+                        break;
+
+                    case 'contact':
+                        this.print(`
+Контактная информация:
+Телефон: +996 555 123 456
+Email: info@codenomad.kg
+Адрес: Бишкек, Кыргызстан
+                        `);
+                        break;
+
+                    case 'clear':
+                        this.output.innerHTML = '';
+                        break;
+
+                    default:
+                        this.print(`Ошибка: неизвестная команда '${cmd}'`);
+                }
+            },
+
+            print(text) {
+                const div = document.createElement('div');
+                div.className = 'terminal-output mb-4';
+                div.textContent = text;
+                this.output.appendChild(div);
+                this.output.scrollTop = this.output.scrollHeight;
+            },
+
+            addToHistory(command) {
+                this.history.push(command);
+                this.historyIndex = this.history.length;
+            },
+
+            navigateHistory(direction) {
+                if (direction === 'up' && this.historyIndex > 0) {
+                    this.historyIndex--;
+                } else if (direction === 'down' && this.historyIndex < this.history.length - 1) {
+                    this.historyIndex++;
+                }
+                this.input.value = this.history[this.historyIndex] || '';
+            }
+        };
+
+        terminal.init();
+    </script>
+</body>
+</html> 

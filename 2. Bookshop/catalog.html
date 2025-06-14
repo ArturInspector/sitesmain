@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог | BookShop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            dark: '#4b2e2e',
+                            medium: '#a47551',
+                            light: '#f5ebe0',
+                            lightest: '#fff8f3'
+                        }
+                    },
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif']
+                    },
+                    boxShadow: {
+                        'custom': '0 4px 20px rgba(75, 46, 46, 0.15)',
+                        'custom-hover': '0 8px 30px rgba(75, 46, 46, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-image: url('./assets/images/screen_bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        .content-overlay {
+            background-color: rgba(255, 248, 243, 0.95);
+            min-height: 100vh;
+        }
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .clickable:hover {
+            transform: scale(1.05);
+        }
+        .book-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .book-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(75, 46, 46, 0.25);
+        }
+        .book-image {
+            transition: all 0.5s ease;
+        }
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+        .book-overlay {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .book-card:hover .book-overlay {
+            opacity: 1;
+        }
+        .filter-animate {
+            transition: all 0.3s ease;
+        }
+        .filter-animate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(75, 46, 46, 0.1);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        /* Стили для мобильного меню */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .mobile-menu-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-overlay">
+        <!-- Шапка сайта -->
+        <header class="bg-coffee-dark text-coffee-lightest py-4 shadow-custom">
+            <div class="container mx-auto px-4">
+                <nav class="flex justify-between items-center">
+                    <a href="./index.html" class="text-2xl font-bold clickable">BookShop</a>
+                    <!-- Десктопное меню -->
+                    <div class="hidden md:flex space-x-6">
+                        <a href="./index.html" class="hover:text-coffee-medium transition-colors clickable">Главная</a>
+                        <a href="./catalog.html" class="hover:text-coffee-medium transition-colors clickable">Каталог</a>
+                        <a href="./about.html" class="hover:text-coffee-medium transition-colors clickable">О нас</a>
+                        <a href="./contact.html" class="hover:text-coffee-medium transition-colors clickable">Контакты</a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Мобильная кнопка меню -->
+                        <button id="mobileMenuButton" class="md:hidden text-coffee-lightest hover:text-coffee-medium transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <a href="./cart.html" class="relative clickable">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span class="absolute -top-2 -right-2 bg-coffee-medium text-white rounded-full w-5 h-5 flex items-center justify-center text-xs cart-count">0</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Мобильное меню -->
+        <div id="mobileMenuOverlay" class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-coffee-dark text-coffee-lightest z-50 p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-bold">Меню</h2>
+                <button id="closeMobileMenu" class="text-coffee-lightest hover:text-coffee-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+                <a href="./index.html" class="hover:text-coffee-medium transition-colors py-2">Главная</a>
+                <a href="./catalog.html" class="hover:text-coffee-medium transition-colors py-2">Каталог</a>
+                <a href="./about.html" class="hover:text-coffee-medium transition-colors py-2">О нас</a>
+                <a href="./contact.html" class="hover:text-coffee-medium transition-colors py-2">Контакты</a>
+            </nav>
+        </div>
+
+        <!-- Основной контент -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Фильтры -->
+            <div class="mb-8">
+                <div class="flex flex-wrap gap-4">
+                    <select class="bg-white border border-coffee-medium rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-coffee-medium filter-animate">
+                        <option value="">Все категории</option>
+                        <option value="fiction">Художественная литература</option>
+                        <option value="business">Бизнес и саморазвитие</option>
+                        <option value="children">Детская литература</option>
+                    </select>
+                    <select class="bg-white border border-coffee-medium rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-coffee-medium filter-animate">
+                        <option value="">Сортировка</option>
+                        <option value="price-asc">По возрастанию цены</option>
+                        <option value="price-desc">По убыванию цены</option>
+                        <option value="name">По названию</option>
+                    </select>
+                    <input type="text" placeholder="Поиск по названию или автору" 
+                           class="bg-white border border-coffee-medium rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-coffee-medium flex-grow filter-animate">
+                </div>
+            </div>
+
+            <h1 class="text-3xl font-bold text-coffee-dark mb-8 animate-fadeInUp">Каталог книг</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="booksGrid">
+                <!-- Карточки книг будут добавлены через JavaScript -->
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="bg-coffee-dark text-coffee-lightest py-12 mt-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">BookShop</h3>
+                        <p class="text-coffee-light">Ваш уютный книжный магазин</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Контакты</h4>
+                        <p>Адрес: ул. Примерная, 123</p>
+                        <p>Телефон: +996 (555) 123-456</p>
+                        <p>Email: info@books.kg</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Мы в соцсетях</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Instagram</a>
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Facebook</a>
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Telegram</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Режим работы</h4>
+                        <p>Пн-Пт: 10:00 - 20:00</p>
+                        <p>Сб-Вс: 11:00 - 19:00</p>
+                    </div>
+                </div>
+                <div class="border-t border-coffee-medium mt-8 pt-8 text-center">
+                    <p>&copy; 2024 BookShop. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/mobile-menu.js"></script>
+    <script>
+        // Функция для проверки видимости элемента
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Функция для обработки анимаций при скролле
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.book-card');
+            elements.forEach(element => {
+                if (isElementInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Добавляем обработчик скролла
+        window.addEventListener('scroll', handleScrollAnimations);
+        // Запускаем проверку при загрузке страницы
+        window.addEventListener('load', handleScrollAnimations);
+    </script>
+</body>
+</html> 

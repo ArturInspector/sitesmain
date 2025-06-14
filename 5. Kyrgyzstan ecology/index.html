@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Сайт об экологии Кыргызстана: защита Иссык-Куля, лесов и переработка отходов">
+  <meta name="description" content="Кыргызстандын экологиясы жөнүндө сайт: Ысык-Көлдү, токойлорду коргоо жана таштандыларды кайра иштетүү" lang="ky">
+  <title data-i18n="title">Экология Кыргызстана</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    html {
+      font-size: calc(14px + 0.5vw);
+    }
+    body {
+      font-family: 'Inter', 'Noto Sans', sans-serif;
+      padding-top: 4rem;
+    }
+    .container {
+      max-width: 90%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: 1536px) {
+      .container {
+        max-width: 1280px;
+      }
+    }
+    @media (max-width: 640px) {
+      .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
+    .lang-switcher button {
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      transition: all 0.3s ease;
+    }
+    .lang-switcher button.active {
+      background-color: #15803d;
+      color: white;
+    }
+    .nav-menu {
+      transition: all 0.3s ease;
+    }
+    .nav-menu.hidden {
+      display: none;
+    }
+    @media (max-width: 640px) {
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(21, 128, 61, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 0.5rem;
+      }
+      .nav-menu li {
+        margin: 0.25rem 0;
+      }
+      .burger {
+        display: block;
+        cursor: pointer;
+        width: 20px;
+      }
+      .burger span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: white;
+        margin: 4px 0;
+        transition: all 0.3s ease;
+      }
+      .burger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+      }
+      .burger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .burger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+    @media (min-width: 641px) {
+      .burger {
+        display: none;
+      }
+      .nav-menu {
+        display: flex !important;
+      }
+    }
+    .header-container {
+      max-width: 100%;
+      overflow: hidden;
+      height: 4rem;
+    }
+
+    /* Новые стили для улучшения UI */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+    .hover-effect {
+      transition: all 0.3s ease;
+    }
+    .hover-effect:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .eco-pattern {
+      background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0zm0 5C16.193 5 5 16.193 5 30s11.193 25 25 25 25-11.193 25-25S43.807 5 30 5zm0 10c8.284 0 15 6.716 15 15s-6.716 15-15 15-15-6.716-15-15 6.716-15 15-15z" fill="%2315803d" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E');
+      background-size: 60px 60px;
+    }
+    .modern-pattern {
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 1px 1px, #15803d 1px, transparent 0),
+        radial-gradient(circle at 1px 1px, #15803d 1px, transparent 0);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+      opacity: 0.03;
+    }
+    .modern-pattern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(21, 128, 61, 0.02) 0%, rgba(5, 150, 105, 0.02) 100%);
+      pointer-events: none;
+    }
+    .wave-divider {
+      height: 50px;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E');
+      background-size: cover;
+      background-position: center;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #15803d 0%, #059669 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .input-focus {
+      transition: all 0.3s ease;
+    }
+    .input-focus:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    /* Новые стили для улучшения визуальных эффектов */
+    .section-title {
+      position: relative;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #15803d, #059669);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .section-title:hover::after {
+      width: 100%;
+    }
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    /* Улучшенные стили для падающих листьев */
+    .leaf {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2315803d" opacity="0.4"%3E%3Cpath d="M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A2,2,0,0,1,8.65,19H9a2,2,0,0,0,2-2V16a2,2,0,0,1,2-2h1a2,2,0,0,0,2-2V9A2,2,0,0,1,19,8Z"/%3E%3C/svg%3E');
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+        transform: translateY(-80vh) rotate(45deg) scale(1);
+      }
+      50% {
+        transform: translateY(-40vh) rotate(180deg) scale(1.1);
+      }
+      90% {
+        opacity: 0.9;
+        transform: translateY(-10vh) rotate(315deg) scale(1);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+    .leaf-1 { animation: fall 15s cubic-bezier(0.4, 0, 0.2, 1) infinite; left: 10%; }
+    .leaf-2 { animation: fall 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; left: 30%; animation-delay: 2s; }
+    .leaf-3 { animation: fall 18s cubic-bezier(0.4, 0, 0.2, 1) infinite; left: 50%; animation-delay: 1s; }
+    .leaf-4 { animation: fall 14s cubic-bezier(0.4, 0, 0.2, 1) infinite; left: 70%; animation-delay: 3s; }
+    .leaf-5 { animation: fall 16s cubic-bezier(0.4, 0, 0.2, 1) infinite; left: 90%; animation-delay: 2.5s; }
+
+    /* Улучшенные эффекты для кнопок */
+    .btn-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-hover::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    .btn-hover:hover::after {
+      width: 300%;
+      height: 300%;
+    }
+    .btn-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Улучшенные эффекты для изображений */
+    .img-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(0.95);
+    }
+    .img-hover:hover {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-teal-50 text-gray-800">
+  <!-- Header -->
+  <header class="bg-green-700 shadow-lg fixed w-full top-0 z-50 eco-pattern">
+    <nav class="header-container container p-2 flex justify-between items-center flex-wrap">
+      <h1 class="text-base sm:text-lg font-bold text-white truncate max-w-[40%]" data-i18n="header_title">Экология Кыргызстана</h1>
+      <div class="flex items-center">
+        <div class="burger sm:hidden" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <ul class="nav-menu flex flex-wrap space-x-2 sm:space-x-3 text-white text-xs">
+            <li><a href="#home" class="hover:text-green-200" data-i18n="nav_home">Главная</a></li>
+            <li><a href="#issues" class="hover:text-green-200" data-i18n="nav_issues">Проблемы</a></li>
+            <li><a href="#initiatives" class="hover:text-green-200" data-i18n="nav_initiatives">Инициативы</a></li>
+            <li><a href="#howtohelp" class="hover:text-green-200" data-i18n="nav_howtohelp">Как помочь</a></li>
+            <li><a href="#contact" class="hover:text-green-200" data-i18n="nav_contact">Контакты</a></li>
+          </ul>
+          <div class="lang-switcher flex space-x-1">
+            <button onclick="setLanguage('ru')" class="active">Рус</button>
+            <button onclick="setLanguage('ky')">Кыр</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center bg-cover bg-center parallax" style="background-image: url('assets/images/background.jpg')" data-aos="fade-up">
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+    <div class="leaf leaf-4"></div>
+    <div class="leaf leaf-5"></div>
+    <div class="container p-4 text-center text-white glass-card py-6 sm:py-8 rounded-lg relative z-10">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4" data-i18n="hero_title">Сохраним природу Кыргызстана!</h2>
+      <p class="text-base sm:text-lg md:text-xl mb-6 max-w-3xl mx-auto" data-i18n="hero_text">Станьте частью волонтерского движения за чистые озера, леса и горы нашей страны!</p>
+      <a href="#howtohelp" class="bg-green-600 text-white px-4 sm:px-6 py-2 rounded-full font-semibold hover:bg-green-700 pulse hover-effect inline-block" data-i18n="hero_cta">Присоединиться</a>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- Issues Section -->
+  <section id="issues" class="py-12 sm:py-16 bg-white relative overflow-hidden">
+    <div class="modern-pattern absolute inset-0"></div>
+    <div class="container p-4 relative z-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8" data-aos="fade-up" data-i18n="issues_title">Экологические проблемы</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover relative z-10" data-aos="fade-up" data-aos-delay="100">
+          <img src="assets/images/lake_trash.jpg" alt="Загрязнение Иссык-Куля" data-i18n-alt="issue_1_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="issue_1_title">Загрязнение Иссык-Куля</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="issue_1_text">Мусор и сточные воды угрожают чистоте озера, нашего природного сокровища.</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover relative z-10" data-aos="fade-up" data-aos-delay="200">
+          <img src="assets/images/vurybka.JPG" alt="Вырубка лесов" data-i18n-alt="issue_2_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="issue_2_title">Вырубка лесов</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="issue_2_text">Незаконная вырубка в горах сокращает зеленые зоны и нарушает экосистемы.</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover relative z-10" data-aos="fade-up" data-aos-delay="300">
+          <img src="assets/images/dirt.jpg" alt="Отходы" data-i18n-alt="issue_3_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="issue_3_title">Проблема отходов</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="issue_3_text">Недостаток переработки приводит к накоплению мусора в городах и природе.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider" style="transform: rotate(180deg);"></div>
+
+  <!-- Initiatives Section -->
+  <section id="initiatives" class="py-12 sm:py-16 bg-gradient-to-br from-green-50 to-teal-50">
+    <div class="container p-4">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8" data-i18n="initiatives_title">Наши инициативы</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover">
+          <img src="assets/images/lake_clean.jpeg" alt="Очистка озер" data-i18n-alt="initiative_1_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="initiative_1_title">Очистка озер</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="initiative_1_text">Организуем субботники для уборки берегов Иссык-Куля и других водоемов.</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover">
+          <img src="assets/images/posadka.jpg" alt="Посадка деревьев" data-i18n-alt="initiative_2_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="initiative_2_title">Посадка деревьев</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="initiative_2_text">Восстанавливаем леса в горных районах Кыргызстана.</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md card-hover">
+          <img src="assets/images/conference.jpeg" alt="Эко-образование" data-i18n-alt="initiative_3_alt" class="w-full h-40 sm:h-48 object-cover rounded img-hover">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="initiative_3_title">Эко-образование</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="initiative_3_text">Проводим семинары для молодежи о важности экологии.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- How to Help Section -->
+  <section id="howtohelp" class="py-12 sm:py-16 bg-white relative overflow-hidden">
+    <div class="modern-pattern absolute inset-0"></div>
+    <div class="container p-4 relative z-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8" data-i18n="howtohelp_title">Как вы можете помочь</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-gray-100 p-4 rounded-lg shadow-md card-hover relative z-10">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="help_1_title">Станьте волонтером</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="help_1_text">Присоединяйтесь к субботникам и акциям по очистке природы.</p>
+          <a href="#contact" class="block mt-4 text-green-600 font-semibold hover:underline btn-hover" data-i18n="help_1_cta">Записаться</a>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg shadow-md card-hover relative z-10">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="help_2_title">Поддержите финансово</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="help_2_text">Ваши пожертвования помогут в создании мусороперерабатывающих станций.</p>
+          <a href="#contact" class="block mt-4 text-green-600 font-semibold hover:underline btn-hover" data-i18n="help_2_cta">Поддержать</a>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg shadow-md card-hover relative z-10">
+          <h3 class="text-lg sm:text-xl font-semibold mt-4" data-i18n="help_3_title">Расскажите друзьям</h3>
+          <p class="text-gray-600 text-sm sm:text-base" data-i18n="help_3_text">Делитесь нашими челленджами в соцсетях, чтобы вдохновить других.</p>
+          <a href="#contact" class="block mt-4 text-green-600 font-semibold hover:underline btn-hover" data-i18n="help_3_cta">Узнать больше</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider" style="transform: rotate(180deg);"></div>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-12 sm:py-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-emerald-50 opacity-90"></div>
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0zm0 5C16.193 5 5 16.193 5 30s11.193 25 25 25 25-11.193 25-25S43.807 5 30 5zm0 10c8.284 0 15 6.716 15 15s-6.716 15-15 15-15-6.716-15-15 6.716-15 15-15z\" fill=\"%2315803d\" fill-opacity=\"0.05\" fill-rule=\"evenodd\"/%3E%3C/svg%3E'); background-size: 60px 60px;"></div>
+    <div class="container p-4 relative z-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8" data-aos="fade-up" data-i18n="contact_title">Станьте волонтером</h2>
+      <div class="max-w-md mx-auto">
+        <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
+          <input type="text" placeholder="Ваше имя" data-i18n-placeholder="contact_name" class="w-full p-3 border rounded text-sm sm:text-base input-focus bg-white/80 backdrop-blur-sm">
+        </div>
+        <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
+          <input type="tel" placeholder="Ваш телефон (Whatsapp)" data-i18n-placeholder="contact_phone" class="w-full p-3 border rounded text-sm sm:text-base input-focus bg-white/80 backdrop-blur-sm">
+        </div>
+        <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
+          <select class="w-full p-3 border rounded text-sm sm:text-base input-focus bg-white/80 backdrop-blur-sm" data-i18n-placeholder="contact_action">
+            <option value="" disabled selected data-i18n="contact_action">Выберите действие</option>
+            <option value="volunteer" data-i18n="contact_action_volunteer">Стать волонтером</option>
+            <option value="donate" data-i18n="contact_action_donate">Сделать пожертвование</option>
+            <option value="info" data-i18n="contact_action_info">Получить информацию</option>
+          </select>
+        </div>
+        <div class="mb-4" data-aos="fade-up" data-aos-delay="400">
+          <textarea placeholder="Ваше сообщение" data-i18n-placeholder="contact_message" class="w-full p-3 border rounded h-24 sm:h-32 text-sm sm:text-base input-focus bg-white/80 backdrop-blur-sm"></textarea>
+        </div>
+        <button class="bg-green-600 text-white px-4 sm:px-6 py-2 rounded-full w-full hover:bg-green-700 hover-effect" data-aos="fade-up" data-aos-delay="500" data-i18n="contact_button">Отправить</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-800 text-white py-6 eco-pattern">
+    <div class="container p-4 text-center">
+      <p class="text-sm sm:text-base" data-i18n="footer_text">© 2025 Экология Кыргызстана. Вместе за чистую природу!</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    const translations = {
+      ru: {
+        title: "Экология Кыргызстана",
+        header_title: "Эко Кыргызстан",
+        nav_home: "Главная",
+        nav_issues: "Проблемы",
+        nav_initiatives: "Инициативы",
+        nav_howtohelp: "Как помочь",
+        nav_contact: "Контакты",
+        hero_title: "Сохраним природу Кыргызстана!",
+        hero_text: "Станьте частью волонтерского движения за чистые озера, леса и горы нашей страны!",
+        hero_cta: "Присоединиться",
+        issues_title: "Экологические проблемы",
+        issue_1_title: "Загрязнение Иссык-Куля",
+        issue_1_text: "Мусор и сточные воды угрожают чистоте озера, нашего природного сокровища.",
+        issue_1_alt: "Загрязнение Иссык-Куля",
+        issue_2_title: "Вырубка лесов",
+        issue_2_text: "Незаконная вырубка в горах сокращает зеленые зоны и нарушает экосистемы.",
+        issue_2_alt: "Вырубка лесов",
+        issue_3_title: "Проблема отходов",
+        issue_3_text: "Недостаток переработки приводит к накоплению мусора в городах и природе.",
+        issue_3_alt: "Отходы",
+        initiatives_title: "Наши инициативы",
+        initiative_1_title: "Очистка озер",
+        initiative_1_text: "Организуем субботники для уборки берегов Иссык-Куля и других водоемов.",
+        initiative_1_alt: "Очистка озер",
+        initiative_2_title: "Посадка деревьев",
+        initiative_2_text: "Восстанавливаем леса в горных районах Кыргызстана.",
+        initiative_2_alt: "Посадка деревьев",
+        initiative_3_title: "Эко-образование",
+        initiative_3_text: "Проводим семинары для молодежи о важности экологии.",
+        initiative_3_alt: "Эко-образование",
+        howtohelp_title: "Как вы можете помочь",
+        help_1_title: "Станьте волонтером",
+        help_1_text: "Присоединяйтесь к субботникам и акциям по очистке природы.",
+        help_1_cta: "Записаться",
+        help_2_title: "Поддержите финансово",
+        help_2_text: "Ваши пожертвования помогут в создании мусороперерабатывающих станций.",
+        help_2_cta: "Поддержать",
+        help_3_title: "Расскажите друзьям",
+        help_3_text: "Делитесь нашими челленджами в соцсетях, чтобы вдохновить других.",
+        help_3_cta: "Узнать больше",
+        contact_title: "Станьте волонтером",
+        contact_name: "Ваше имя",
+        contact_phone: "Ваш телефон (Whatsapp)",
+        contact_action: "Выберите действие",
+        contact_action_volunteer: "Стать волонтером",
+        contact_action_donate: "Сделать пожертвование",
+        contact_action_info: "Получить информацию",
+        contact_message: "Ваше сообщение",
+        contact_button: "Отправить",
+        footer_text: "© 2025 Экология Кыргызстана. Вместе за чистую природу!"
+      },
+      ky: {
+        title: "Кыргызстандын экологиясы",
+        header_title: "Эко Кыргызстан",
+        nav_home: "Башкы",
+        nav_issues: "Кыйынчылыктар",
+        nav_initiatives: "Демилгелер",
+        nav_howtohelp: "Кантип жардам берсе болот",
+        nav_contact: "Байланыш",
+        hero_title: "Кыргызстандын жаратылышын сактайлы!",
+        hero_text: "Таза көлдөр, токойлор жана тоолор үчүн ыктыярчылар кыймылына кошул!",
+        hero_cta: "Кошулуу",
+        issues_title: "Экологиялык кыйынчылыктар",
+        issue_1_title: "Ысык-Көлдүн булганышы",
+        issue_1_text: "Таштандылар жана агынды суулар биздин жаратылыш байлыгыбыз болгон көлдүн тазалыгына коркунуч келтирет.",
+        issue_1_alt: "Ысык-Көлдүн булганышы",
+        issue_2_title: "Токойлордун кыйылышы",
+        issue_2_text: "Тоолордогу мыйзамсыз кыйуу жашыл зоналарды азайтып, экосистеманы бузат.",
+        issue_2_alt: "Токойлордун кыйылышы",
+        issue_3_title: "Таштанды көйгөйү",
+        issue_3_text: "Кайра иштетүүнүн жетишсиздиги шаарларда жана жаратылышта таштандылардын топтолушуна алып келет.",
+        issue_3_alt: "Таштанды көйгөйү",
+        initiatives_title: "Биздин демилгелер",
+        initiative_1_title: "Көлдөрдү тазалоо",
+        initiative_1_text: "Ысык-Көлдүн жана башка суу сактагычтардын жээктерин тазалоо үчүн ишембиликтерди уюштурабыз.",
+        initiative_1_alt: "Көлдөрдү тазалоо",
+        initiative_2_title: "Дарак отургузуу",
+        initiative_2_text: "Кыргызстандын тоолуу аймактарында токойлорду калыбына келтиребиз.",
+        initiative_2_alt: "Дарак отургузуу",
+        initiative_3_title: "Эко-билим берүү",
+        initiative_3_text: "Жаштар үчүн экологиянын маанилүүлүгү жөнүндө семинарларды өткөрөбүз.",
+        initiative_3_alt: "Эко-билим берүү",
+        howtohelp_title: "Кантип жардам берсе болот",
+        help_1_title: "Ыктыярчы бол",
+        help_1_text: "Жаратылышты тазалоо боюнча ишембиликтерге жана акцияларга кошул.",
+        help_1_cta: "Катталуу",
+        help_2_title: "Финансылык колдоо",
+        help_2_text: "Сиздин салымыңыз таштандыларды кайра иштетүүчү станцияларды түзүүгө жардам берет.",
+        help_2_cta: "Колдоо",
+        help_3_title: "Досторуңузга айтып бериңиз",
+        help_3_text: "Биздин челлендждерди соцтармактарда бөлүшүп, башкаларды шыктандырыңыз.",
+        help_3_cta: "Көбүрөөк билүү",
+        contact_title: "Ыктыярчы бол",
+        contact_name: "Сиздин атыңыз",
+        contact_phone: "Сиздин телефон (Whatsapp)",
+        contact_action: "Аракетти тандаңыз",
+        contact_action_volunteer: "Ыктыярчы болуу",
+        contact_action_donate: "Кайрымдуулуk кылуу",
+        contact_action_info: "Маалымат алуу",
+        contact_message: "Сиздин билдирүүңүз",
+        contact_button: "Жөнөтүү",
+        footer_text: "© 2025 Кыргызстандын экологиясы. Таза жаратылыш үчүн бирге!"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          element.placeholder = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+        const key = element.getAttribute('data-i18n-alt');
+        if (translations[lang][key]) {
+          element.alt = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('option[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      document.title = translations[lang].title;
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent === (lang === 'ru' ? 'Рус' : 'Кыр')) {
+          btn.classList.add('active');
+        }
+      });
+      localStorage.setItem('language', lang);
+    }
+
+    function toggleMenu() {
+      const menu = document.querySelector('.nav-menu');
+      const burger = document.querySelector('.burger');
+      menu.classList.toggle('hidden');
+      burger.classList.toggle('active');
+    }
+
+    // Инициализация языка
+    const savedLang = localStorage.getItem('language') || 'ru';
+    setLanguage(savedLang);
+
+    // Скрыть меню на мобильных по умолчанию
+    if (window.innerWidth <= 640) {
+      document.querySelector('.nav-menu').classList.add('hidden');
+    }
+
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+
+    // Добавляем динамическое создание листьев
+    function createLeaves() {
+      const heroSection = document.querySelector('#home');
+      const leafCount = 5;
+      
+      for (let i = 0; i < leafCount; i++) {
+        const leaf = document.createElement('div');
+        leaf.className = `leaf leaf-${i + 1}`;
+        heroSection.appendChild(leaf);
+      }
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      createLeaves();
+      // ... existing code ...
+    });
+  </script>
+</body>
+</html>

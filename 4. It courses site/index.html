@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeNomad.kg - Онлайн-курсы программирования в Кыргызстане</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-green': '#39FF14',
+                        'neon-blue': '#00FFFF',
+                        'neon-purple': '#9d00ff',
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+        }
+        .neon-text {
+            text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+        }
+        .glass-effect {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="fixed w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-[#39ff14] flex items-center">
+                    <img src="images/logo.png" 
+                         alt="CodeNomad.kg" 
+                         class="h-8 inline-block mr-2">
+                    CodeNomad.kg
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-green transition">Главная</a>
+                    <a href="courses.html" class="text-white hover:text-neon-green transition">Курсы</a>
+                    <a href="terminal.html" class="text-white hover:text-neon-green transition">Терминал</a>
+                    <a href="about.html" class="text-white hover:text-neon-green transition">О нас</a>
+                    <a href="reviews.html" class="text-white hover:text-neon-green transition">Отзывы</a>
+                    <a href="contacts.html" class="text-white hover:text-neon-green transition">Контакты</a>
+                </div>
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Мобильное меню -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="py-4 space-y-4">
+                    <a href="index.html" class="block text-white hover:text-neon-green transition px-4 py-2">Главная</a>
+                    <a href="courses.html" class="block text-white hover:text-neon-green transition px-4 py-2">Курсы</a>
+                    <a href="terminal.html" class="block text-white hover:text-neon-green transition px-4 py-2">Терминал</a>
+                    <a href="about.html" class="block text-white hover:text-neon-green transition px-4 py-2">О нас</a>
+                    <a href="reviews.html" class="block text-white hover:text-neon-green transition px-4 py-2">Отзывы</a>
+                    <a href="contacts.html" class="block text-white hover:text-neon-green transition px-4 py-2">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero секция -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        <span class="neon-text">Стань</span> разработчиком<br>
+                        <span class="text-neon-blue">в Кыргызстане</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg mb-8">
+                        Обучаем программированию с нуля до профессионального уровня. 
+                        Практические курсы, менторство и помощь в трудоустройстве.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="courses.html" class="px-8 py-3 bg-neon-green text-black font-bold hover:bg-opacity-80 transition">
+                            Начать обучение
+                        </a>
+                        <a href="terminal.html" class="px-8 py-3 border border-neon-purple text-neon-purple hover:bg-neon-purple hover:text-black transition">
+                            Попробовать терминал
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-12 md:mt-0" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&h=600&q=80" 
+                         alt="Программирование" 
+                         class="w-full rounded-lg shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 neon-text" data-aos="fade-up">
+                Почему выбирают <span class="text-neon-green">CodeNomad.kg</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-effect p-6 rounded-lg border border-neon-green/20" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2091/2091943.png" alt="Практика" class="w-16 h-16 mb-4">
+                    <h3 class="text-xl font-bold mb-4">Практические проекты</h3>
+                    <p class="text-gray-400">Реальные задачи и проекты, которые помогут создать портфолио</p>
+                </div>
+                <div class="glass-effect p-6 rounded-lg border border-neon-green/20" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Менторство" class="w-16 h-16 mb-4">
+                    <h3 class="text-xl font-bold mb-4">Менторство</h3>
+                    <p class="text-gray-400">Персональные консультации с опытными разработчиками</p>
+                </div>
+                <div class="glass-effect p-6 rounded-lg border border-neon-green/20" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Трудоустройство" class="w-16 h-16 mb-4">
+                    <h3 class="text-xl font-bold mb-4">Трудоустройство</h3>
+                    <p class="text-gray-400">Помощь в поиске работы и стажировок после обучения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные курсы -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 neon-text" data-aos="fade-up">
+                Популярные <span class="text-neon-green">курсы</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Карточка курса 1 -->
+                <div class="glass-effect rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&h=400&q=80" 
+                         alt="Frontend разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Frontend разработка</h3>
+                        <p class="text-gray-400 mb-4">HTML, CSS, JavaScript, React</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">24 000 KGS</span>
+                            <a href="courses.html#frontend" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка курса 2 -->
+                <div class="glass-effect rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&w=800&h=400&q=80" 
+                         alt="Backend разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Backend разработка</h3>
+                        <p class="text-gray-400 mb-4">Python, Django, PostgreSQL</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">28 000 KGS</span>
+                            <a href="courses.html#backend" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка курса 3 -->
+                <div class="glass-effect rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=800&h=400&q=80" 
+                         alt="Мобильная разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Мобильная разработка</h3>
+                        <p class="text-gray-400 mb-4">Flutter, Dart, Firebase</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">32 000 KGS</span>
+                            <a href="courses.html#mobile" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="courses.html" class="inline-block px-8 py-3 border border-neon-purple text-neon-purple hover:bg-neon-purple hover:text-black transition">
+                    Все курсы
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA секция -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="glass-effect p-12 rounded-lg">
+                <h2 class="text-3xl font-bold mb-8 neon-text" data-aos="fade-up">
+                    Готовы начать свой путь в <span class="text-neon-green">программировании</span>?
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Присоединяйтесь к сообществу CodeNomad.kg и станьте частью технологического будущего Кыргызстана
+                </p>
+                <a href="contacts.html" class="inline-block px-8 py-3 bg-neon-green text-black font-bold hover:bg-opacity-80 transition" data-aos="fade-up" data-aos-delay="200">
+                    Записаться на консультацию
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="glass-effect py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="index.html" class="text-2xl font-bold text-neon-green flex items-center mb-4">
+                        <img src="images/logo.png" 
+                             alt="CodeNomad.kg" 
+                             class="h-8 inline-block mr-2">
+                        CodeNomad.kg
+                    </a>
+                    <p class="text-gray-400">Онлайн-школа программирования в Кыргызстане</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Навигация</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon-green transition">Главная</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-neon-green transition">Курсы</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-neon-green transition">О нас</a></li>
+                        <li><a href="contacts.html" class="text-gray-400 hover:text-neon-green transition">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Location" class="w-5 h-5 mr-2">
+                            Бишкек, Кыргызстан
+                        </li>
+                        <li class="flex items-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="Phone" class="w-5 h-5 mr-2">
+                            +996 555 123 456
+                        </li>
+                        <li class="flex items-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3178/3178158.png" alt="Email" class="w-5 h-5 mr-2">
+                            info@codenomad.kg
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Социальные сети</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" class="w-8 h-8">
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" class="w-8 h-8">
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="w-8 h-8">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 CodeNomad.kg. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Мобильное меню
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        mobileMenuButton.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('hidden');
+            
+            // Анимация иконки меню
+            if (isMenuOpen) {
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+            } else {
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            }
+        });
+
+        // Закрытие меню при клике на ссылку
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                isMenuOpen = false;
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            });
+        });
+    </script>
+</body>
+</html> 

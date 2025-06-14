@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookShop - Ваш книжный магазин</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            dark: '#4b2e2e',
+                            medium: '#a47551',
+                            light: '#f5ebe0',
+                            lightest: '#fff8f3'
+                        }
+                    },
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif']
+                    },
+                    boxShadow: {
+                        'custom': '0 4px 20px rgba(75, 46, 46, 0.15)',
+                        'custom-hover': '0 8px 30px rgba(75, 46, 46, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-image: url('./assets/images/screen_bg3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .clickable:hover {
+            transform: scale(1.05);
+        }
+        .content-overlay {
+            background-color: rgba(255, 248, 243, 0.95);
+            min-height: 100vh;
+        }
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(75, 46, 46, 0.95) 0%, rgba(164, 117, 81, 0.85) 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(75, 46, 46, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-overlay">
+        <!-- Шапка сайта -->
+        <header class="bg-coffee-dark text-coffee-lightest py-4 shadow-custom">
+            <div class="container mx-auto px-4">
+                <nav class="flex justify-between items-center">
+                    <a href="./index.html" class="text-2xl font-bold clickable">BookShop</a>
+                    <!-- Десктопное меню -->
+                    <div class="hidden md:flex space-x-6">
+                        <a href="./index.html" class="hover:text-coffee-medium transition-colors clickable">Главная</a>
+                        <a href="./catalog.html" class="hover:text-coffee-medium transition-colors clickable">Каталог</a>
+                        <a href="./about.html" class="hover:text-coffee-medium transition-colors clickable">О нас</a>
+                        <a href="./contact.html" class="hover:text-coffee-medium transition-colors clickable">Контакты</a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Мобильная кнопка меню -->
+                        <button id="mobileMenuButton" class="md:hidden text-coffee-lightest hover:text-coffee-medium transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <a href="./cart.html" class="relative clickable">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span class="absolute -top-2 -right-2 bg-coffee-medium text-white rounded-full w-5 h-5 flex items-center justify-center text-xs cart-count">0</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Мобильное меню -->
+        <div id="mobileMenuOverlay" class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-coffee-dark text-coffee-lightest z-50 p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-bold">Меню</h2>
+                <button id="closeMobileMenu" class="text-coffee-lightest hover:text-coffee-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+                <a href="./index.html" class="hover:text-coffee-medium transition-colors py-2">Главная</a>
+                <a href="./catalog.html" class="hover:text-coffee-medium transition-colors py-2">Каталог</a>
+                <a href="./about.html" class="hover:text-coffee-medium transition-colors py-2">О нас</a>
+                <a href="./contact.html" class="hover:text-coffee-medium transition-colors py-2">Контакты</a>
+            </nav>
+        </div>
+
+        <!-- Главный баннер -->
+        <section class="relative h-[600px] bg-coffee-dark overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-50"></div>
+            <div class="gradient-overlay absolute inset-0"></div>
+            <div class="relative container mx-auto px-4 h-full flex items-center">
+                <div class="max-w-2xl text-coffee-lightest" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="text-5xl font-bold mb-4">Добро пожаловать в мир книг</h1>
+                    <p class="text-xl mb-8">Уютный книжный магазин в сердце Бишкека, где каждая книга — это новая история</p>
+                    <a href="./catalog.html" class="bg-coffee-medium hover:bg-coffee-dark text-white px-8 py-3 rounded-lg transition-colors shadow-custom clickable">Перейти в каталог</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Популярные категории -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-coffee-dark mb-8" data-aos="fade-up">Популярные категории</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-coffee-light p-6 rounded-lg shadow-custom card-hover" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-xl font-bold text-coffee-dark mb-2">Художественная литература</h3>
+                        <p class="text-coffee-medium">Классика и современная проза</p>
+                    </div>
+                    <div class="bg-coffee-light p-6 rounded-lg shadow-custom card-hover" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold text-coffee-dark mb-2">Бизнес и саморазвитие</h3>
+                        <p class="text-coffee-medium">Книги для личностного роста</p>
+                    </div>
+                    <div class="bg-coffee-light p-6 rounded-lg shadow-custom card-hover" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-xl font-bold text-coffee-dark mb-2">Детская литература</h3>
+                        <p class="text-coffee-medium">Книги для маленьких читателей</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Новинки -->
+        <section class="py-16 bg-coffee-lightest">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-coffee-dark mb-8" data-aos="fade-up">Новинки</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6" id="newBooksGrid">
+                    <!-- Карточки книг будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Футер -->
+        <footer class="bg-coffee-dark text-coffee-lightest py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div data-aos="fade-up">
+                        <h3 class="text-xl font-bold mb-4">BookShop</h3>
+                        <p class="text-coffee-light">Ваш уютный книжный магазин</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-lg font-bold mb-4">Контакты</h4>
+                        <p>Адрес: ул. Примерная, 123</p>
+                        <p>Телефон: +996 (555) 123-456</p>
+                        <p>Email: info@coffeebooks.kg</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="text-lg font-bold mb-4">Мы в соцсетях</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Instagram</a>
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Facebook</a>
+                            <a href="#" class="hover:text-coffee-medium transition-colors clickable">Telegram</a>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <h4 class="text-lg font-bold mb-4">Режим работы</h4>
+                        <p>Пн-Пт: 10:00 - 20:00</p>
+                        <p>Сб-Вс: 11:00 - 19:00</p>
+                    </div>
+                </div>
+                <div class="border-t border-coffee-medium mt-8 pt-8 text-center">
+                    <p>&copy; 2024 BookShop. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./js/script.js"></script>
+    <script src="./js/mobile-menu.js"></script>
+    <script>
+        // Инициализация AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+</body>
+</html> 

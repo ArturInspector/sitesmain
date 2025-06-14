@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видеограф в Бишкеке</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .gradient-overlay {
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.8) 0%, 
+                rgba(0,0,0,0.6) 50%,
+                rgba(0,0,0,0.8) 100%);
+        }
+
+        .nav-gradient {
+            background: linear-gradient(to bottom,
+                rgba(0,0,0,0.9) 0%,
+                rgba(0,0,0,0.7) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-gradient {
+            background: linear-gradient(to bottom,
+                rgba(0,0,0,0.95) 0%,
+                rgba(0,0,0,0.85) 100%);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-gradient {
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            transition: all 0.3s ease;
+        }
+
+        .hover-gradient:hover {
+            background: linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Video Background -->
+    <video id="backgroundVideo" class="video-background" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/background/background_1.mp4" type="video/mp4">
+    </video>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/audio/background.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Language Switcher -->
+    <div class="fixed bottom-8 right-8 z-50 flex space-x-4">
+        <button id="soundToggle" class="text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 px-4 py-2 rounded-full">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+        <button id="langSwitch" class="text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 px-4 py-2 rounded-full">
+            EN | RU
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 py-6 px-8 nav-gradient">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">ALIHAN</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-gray-300 transition-colors" data-lang="nav-home">Главная</a>
+                <a href="portfolio.html" class="hover:text-gray-300 transition-colors" data-lang="nav-portfolio">Портфолио</a>
+                <a href="#contact" class="hover:text-gray-300 transition-colors" data-lang="nav-contact">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="gradient-overlay absolute inset-0"></div>
+        <div class="container mx-auto px-4 md:px-8 text-center z-10">
+            <h1 class="text-4xl md:text-7xl font-bold mb-6 md:mb-8 text-center fade-in" data-lang="hero-title">Профессиональная видеосъемка</h1>
+            <p class="text-lg md:text-xl text-gray-400 text-center mb-8 md:mb-12 fade-in" data-lang="hero-subtitle">Создаю качественные видео для твоих важных моментов</p>
+            <a href="portfolio.html" class="inline-block bg-white text-black px-8 py-3 rounded-full hover:bg-gray-200 transition-colors fade-in hover-gradient" data-lang="hero-cta">
+                Смотреть шоурил
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 section-gradient">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold mb-12 text-center fade-in" data-lang="about-title">Обо мне</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <p class="text-lg mb-6" data-lang="about-text">
+                        Я профессиональный видеограф, создающий качественные видео для важных моментов твоей жизни. 
+                        Моя специализация включает свадебную съемку, корпоративные проекты и съемку мероприятий. 
+                        Каждый проект для меня - это возможность создать уникальную историю.
+                    </p>
+                </div>
+                <div class="fade-in">
+                    <img src="assets/images/about_me.jpg" alt="About Me" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 section-gradient">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 md:mb-8 text-center fade-in" data-lang="portfolio-title">Портфолио</h2>
+            <p class="text-lg md:text-xl text-gray-400 text-center mb-12 md:mb-16 fade-in" data-lang="portfolio-subtitle">Мои лучшие работы</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Portfolio items will be added dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 section-gradient">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 md:mb-8 text-center fade-in" data-lang="contact-title">Контакты</h2>
+            <p class="text-lg md:text-xl text-gray-400 text-center mb-12 md:mb-16 fade-in" data-lang="contact-subtitle">Свяжись со мной для обсуждения твоего проекта</p>
+            <div class="grid md:grid-cols-2 gap-12">
+                <form class="space-y-6 fade-in">
+                    <div>
+                        <input type="text" placeholder="Name" class="w-full bg-gray-900 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                    <div>
+                        <input type="email" placeholder="Email" class="w-full bg-gray-900 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                    <div>
+                        <textarea placeholder="Message" rows="4" class="w-full bg-gray-900 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                    </div>
+                    <button type="submit" class="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-200 transition-colors hover-gradient" data-lang="contact-send">
+                        Отправить
+                    </button>
+                </form>
+                <div class="fade-in">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold" data-lang="contact-social">Social Media</h3>
+                        <div class="flex space-x-6">
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                                <i class="fab fa-instagram text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                                <i class="fab fa-vimeo text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors">
+                                <i class="fab fa-youtube text-2xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы - CodeNomad.kg</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+        .neon-green {
+            color: #39ff14;
+        }
+        .neon-blue {
+            color: #00ffff;
+        }
+        .neon-purple {
+            color: #9d00ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="fixed w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-[#39ff14] flex items-center">
+                    <img src="images/logo.png" 
+                         alt="CodeNomad.kg" 
+                         class="h-8 inline-block mr-2">
+                    CodeNomad.kg
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-green transition">Главная</a>
+                    <a href="courses.html" class="text-white hover:text-neon-green transition">Курсы</a>
+                    <a href="terminal.html" class="text-white hover:text-neon-green transition">Терминал</a>
+                    <a href="about.html" class="text-white hover:text-neon-green transition">О нас</a>
+                    <a href="reviews.html" class="text-white hover:text-neon-green transition">Отзывы</a>
+                    <a href="contacts.html" class="text-white hover:text-neon-green transition">Контакты</a>
+                </div>
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Мобильное меню -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="py-4 space-y-4">
+                    <a href="index.html" class="block text-white hover:text-neon-green transition px-4 py-2">Главная</a>
+                    <a href="courses.html" class="block text-white hover:text-neon-green transition px-4 py-2">Курсы</a>
+                    <a href="terminal.html" class="block text-white hover:text-neon-green transition px-4 py-2">Терминал</a>
+                    <a href="about.html" class="block text-white hover:text-neon-green transition px-4 py-2">О нас</a>
+                    <a href="reviews.html" class="block text-white hover:text-neon-green transition px-4 py-2">Отзывы</a>
+                    <a href="contacts.html" class="block text-white hover:text-neon-green transition px-4 py-2">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="container mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-center" data-aos="fade-up">
+                Наши <span class="neon-green">курсы</span>
+            </h1>
+            <p class="text-gray-400 text-lg text-center max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                Выберите направление, которое вам интересно, и начните свой путь в программировании
+            </p>
+        </div>
+    </section>
+
+    <!-- Фильтры -->
+    <section class="pb-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+                <button class="px-6 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition filter-btn active" data-category="all">
+                    Все курсы
+                </button>
+                <button class="px-6 py-2 border border-gray-800 text-gray-400 hover:border-neon-green hover:text-neon-green transition filter-btn" data-category="frontend">
+                    Frontend
+                </button>
+                <button class="px-6 py-2 border border-gray-800 text-gray-400 hover:border-neon-green hover:text-neon-green transition filter-btn" data-category="backend">
+                    Backend
+                </button>
+                <button class="px-6 py-2 border border-gray-800 text-gray-400 hover:border-neon-green hover:text-neon-green transition filter-btn" data-category="mobile">
+                    Mobile
+                </button>
+                <button class="px-6 py-2 border border-gray-800 text-gray-400 hover:border-neon-green hover:text-neon-green transition filter-btn" data-category="devops">
+                    DevOps
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Список курсов -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8" id="courses-grid">
+                <!-- Frontend -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors course-card" data-category="frontend" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80" 
+                         alt="Frontend разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Frontend разработка</h3>
+                        <p class="text-gray-400 mb-4">HTML, CSS, JavaScript, React</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 6 месяцев обучения</li>
+                            <li>• 12 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">24 000 KGS</span>
+                            <a href="course.html?id=frontend" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors course-card" data-category="backend" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80" 
+                         alt="Backend разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Backend разработка</h3>
+                        <p class="text-gray-400 mb-4">Python, Django, PostgreSQL</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 8 месяцев обучения</li>
+                            <li>• 10 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">28 000 KGS</span>
+                            <a href="course.html?id=backend" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors course-card" data-category="mobile" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80" 
+                         alt="Мобильная разработка" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Мобильная разработка</h3>
+                        <p class="text-gray-400 mb-4">Flutter, Dart, Firebase</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 7 месяцев обучения</li>
+                            <li>• 8 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">32 000 KGS</span>
+                            <a href="course.html?id=mobile" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors course-card" data-category="devops" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80" 
+                         alt="DevOps" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">DevOps</h3>
+                        <p class="text-gray-400 mb-4">Docker, Kubernetes, AWS</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 6 месяцев обучения</li>
+                            <li>• 6 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">36 000 KGS</span>
+                            <a href="course.html?id=devops" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Science -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors" data-aos="fade-up" data-aos-delay="400">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" 
+                         alt="Data Science" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Data Science</h3>
+                        <p class="text-gray-400 mb-4">Python, ML, Data Analysis</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 8 месяцев обучения</li>
+                            <li>• 7 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">34 000 KGS</span>
+                            <a href="course.html?id=data-science" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QA -->
+                <div class="border border-gray-800 rounded-lg overflow-hidden hover:border-neon-green transition-colors" data-aos="fade-up" data-aos-delay="500">
+                    <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                         alt="QA Engineering" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">QA Engineering</h3>
+                        <p class="text-gray-400 mb-4">Manual Testing, Automation</p>
+                        <ul class="text-gray-400 mb-4 space-y-2">
+                            <li>• 4 месяца обучения</li>
+                            <li>• 5 проектов в портфолио</li>
+                            <li>• Поддержка ментора</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-neon-green text-xl">20 000 KGS</span>
+                            <a href="course.html?id=qa" class="px-4 py-2 border border-neon-green text-neon-green hover:bg-neon-green hover:text-black transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA секция -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">
+                Не нашли подходящий курс?
+            </h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Оставьте заявку, и мы поможем выбрать направление, которое подходит именно вам
+            </p>
+            <a href="contacts.html" class="inline-block px-8 py-3 bg-neon-green text-black font-bold hover:bg-opacity-80 transition" data-aos="fade-up" data-aos-delay="200">
+                Получить консультацию
+            </a>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold neon-green mb-4">CodeNomad.kg</h3>
+                    <p class="text-gray-400">Онлайн-школа программирования в Кыргызстане</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Навигация</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon-green transition">Главная</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-neon-green transition">Курсы</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-neon-green transition">О нас</a></li>
+                        <li><a href="contacts.html" class="text-gray-400 hover:text-neon-green transition">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Бишкек, Кыргызстан</li>
+                        <li>+996 555 123 456</li>
+                        <li>info@codenomad.kg</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Социальные сети</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-neon-green transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 CodeNomad.kg. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Мобильное меню
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        mobileMenuButton.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('hidden');
+            
+            // Анимация иконки меню
+            if (isMenuOpen) {
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+            } else {
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            }
+        });
+
+        // Закрытие меню при клике на ссылку
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                isMenuOpen = false;
+                mobileMenuButton.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            });
+        });
+
+        // Фильтрация курсов
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const courseCards = document.querySelectorAll('.course-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Обновляем активную кнопку
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('border-neon-green', 'text-neon-green');
+                    btn.classList.add('border-gray-800', 'text-gray-400');
+                });
+                button.classList.remove('border-gray-800', 'text-gray-400');
+                button.classList.add('border-neon-green', 'text-neon-green');
+
+                // Фильтруем курсы
+                const category = button.dataset.category;
+                courseCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофе-тест</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .progress-bar {
+            background: linear-gradient(90deg, 
+                #92400e 0%, 
+                #92400e 0%, 
+                #fef3c7 0%);
+            transition: background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.1) 0%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.1) 100%);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .radio-option {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-option:hover {
+            transform: translateZ(20px);
+        }
+        
+        .radio-option input:checked + label {
+            @apply ring-4 ring-amber-400/50 scale-105;
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .loading-coffee {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+            animation: pour 1s steps(10) forwards;
+        }
+
+        .question {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .question.active {
+            position: relative;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .question.previous {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        #coffeeQuiz {
+            position: relative;
+            min-height: 400px;
+            padding-bottom: 2rem;
+        }
+
+        .result-text {
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <!-- Шапка -->
+    <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100 hover:text-amber-700 dark:hover:text-amber-300 transition-colors">
+                    KofiMood ☕
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="nav-link text-amber-800 dark:text-amber-200 hover:text-amber-600 dark:hover:text-amber-400">
+                        Главная
+                    </a>
+                    <a href="index.html#menu" class="nav-link text-amber-800 dark:text-amber-200 hover:text-amber-600 dark:hover:text-amber-400">
+                        Меню
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="theme-toggle fixed top-4 right-4 z-50">
+        <button id="themeToggle" class="p-2 rounded-full bg-amber-200 dark:bg-gray-700 hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+            </svg>
+        </button>
+    </div>
+
+    <main class="container mx-auto px-4 py-16 max-w-2xl">
+        <div class="text-center space-y-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-900 dark:text-amber-100">
+                Кофе-тест
+            </h1>
+
+            <div class="relative h-2 bg-amber-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="progress-bar absolute h-full w-0 bg-amber-600"></div>
+            </div>
+
+            <div id="debug" class="text-sm text-amber-800 dark:text-amber-200"></div>
+
+            <form id="coffeeQuiz" class="space-y-8">
+                <!-- Вопрос 1 -->
+                <div class="question active" data-step="1">
+                    <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">
+                        Как вы себя чувствуете сегодня?
+                    </h2>
+                    <div class="grid gap-4">
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="wakeup" value="tired" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">😴 Нужен заряд энергии</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="wakeup" value="energetic" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">⚡ Полон сил и энергии</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="wakeup" value="neutral" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">😊 Обычное настроение</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Вопрос 2 -->
+                <div class="question" data-step="2">
+                    <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">
+                        Какие у вас планы на день?
+                    </h2>
+                    <div class="grid gap-4">
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="plans" value="work" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">💼 Рабочий день</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="plans" value="relax" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">🌿 Отдых и расслабление</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="plans" value="meeting" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">👥 Встреча с друзьями</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Вопрос 3 -->
+                <div class="question" data-step="3">
+                    <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">
+                        Какой вкус кофе вы предпочитаете?
+                    </h2>
+                    <div class="grid gap-4">
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="style" value="strong" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">☕ Крепкий и насыщенный</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="style" value="mild" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">🥛 Нежный и мягкий</span>
+                        </label>
+                        <label class="radio-option block p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                            <input type="radio" name="style" value="sweet" class="hidden">
+                            <span class="text-gray-900 dark:text-amber-100 transition-colors hover:text-amber-700 dark:hover:text-amber-50">🍯 Сладкий с добавками</span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <canvas id="confetti" class="confetti"></canvas>
+
+    <script type="module">
+        // Временная заглушка для звуков и конфетти
+        const playSound = (sound) => console.log('Playing sound:', sound);
+        const createConfetti = (canvas) => console.log('Creating confetti');
+
+        const quiz = document.getElementById('coffeeQuiz');
+        const questions = document.querySelectorAll('.question');
+        const progressBar = document.querySelector('.progress-bar');
+        const debug = document.getElementById('debug');
+        
+        let currentStep = 1;
+        const totalSteps = questions.length;
+        
+        function updateProgress() {
+            const progress = Math.round(((currentStep - 1) / totalSteps) * 100);
+            progressBar.style.width = `${progress}%`;
+            debug.textContent = `Шаг ${currentStep} из ${totalSteps} (${progress}%)`;
+        }
+        
+        function showQuestion(step) {
+            questions.forEach(q => {
+                q.classList.remove('active');
+                if (parseInt(q.dataset.step) === step) {
+                    q.classList.add('active');
+                } else if (parseInt(q.dataset.step) < step) {
+                    q.classList.add('previous');
+                } else {
+                    q.classList.remove('previous');
+                }
+            });
+            updateProgress();
+        }
+        
+        function handleAnswer(event) {
+            const input = event.target;
+            if (input.type === 'radio') {
+                debug.textContent += `\nВыбран ответ: ${input.value}`;
+                
+                playSound('success');
+                createConfetti(confetti);
+                
+                setTimeout(() => {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        showQuestion(currentStep);
+                    } else {
+                        // Собираем все ответы
+                        const answers = {
+                            wakeup: document.querySelector('input[name="wakeup"]:checked')?.value,
+                            plans: document.querySelector('input[name="plans"]:checked')?.value,
+                            style: document.querySelector('input[name="style"]:checked')?.value
+                        };
+                        
+                        debug.textContent += `\nВсе ответы: ${JSON.stringify(answers)}`;
+                        
+                        // Переходим на страницу результатов
+                        const queryString = new URLSearchParams(answers).toString();
+                        window.location.href = `result.html?${queryString}`;
+                    }
+                }, 500);
+            }
+        }
+        
+        // Добавляем обработчики событий для всех радио-кнопок
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', handleAnswer);
+        });
+
+        // Инициализация
+        showQuestion(1);
+
+        // Переключатель темы
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        function setTheme(isDark) {
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Инициализация темы
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme === 'dark');
+        } else {
+            setTheme(prefersDark.matches);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(!isDark);
+            playSound('click');
+        });
+
+        // Слушатель изменения системной темы
+        prefersDark.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches);
+            }
+        });
+    </script>
+</body>
+</html>

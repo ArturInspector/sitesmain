@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | Книги</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            dark: '#4b2e2e',
+                            medium: '#a47551',
+                            light: '#f5ebe0',
+                            lightest: '#fff8f3'
+                        }
+                    },
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+<body class="bg-coffee-lightest min-h-screen">
+    <!-- Шапка сайта -->
+    <header class="bg-coffee-dark text-coffee-lightest py-4 shadow-custom">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center">
+                <a href="./index.html" class="text-2xl font-bold clickable">BookShop</a>
+                <!-- Десктопное меню -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="./index.html" class="hover:text-coffee-medium transition-colors clickable">Главная</a>
+                    <a href="./catalog.html" class="hover:text-coffee-medium transition-colors clickable">Каталог</a>
+                    <a href="./about.html" class="hover:text-coffee-medium transition-colors clickable">О нас</a>
+                    <a href="./contact.html" class="hover:text-coffee-medium transition-colors clickable">Контакты</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Мобильная кнопка меню -->
+                    <button id="mobileMenuButton" class="md:hidden text-coffee-lightest hover:text-coffee-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <a href="./cart.html" class="relative clickable">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-coffee-medium text-white rounded-full w-5 h-5 flex items-center justify-center text-xs cart-count">0</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-coffee-dark text-coffee-lightest z-50 p-6">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold">Меню</h2>
+            <button id="closeMobileMenu" class="text-coffee-lightest hover:text-coffee-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-4">
+            <a href="./index.html" class="hover:text-coffee-medium transition-colors py-2">Главная</a>
+            <a href="./catalog.html" class="hover:text-coffee-medium transition-colors py-2">Каталог</a>
+            <a href="./about.html" class="hover:text-coffee-medium transition-colors py-2">О нас</a>
+            <a href="./contact.html" class="hover:text-coffee-medium transition-colors py-2">Контакты</a>
+        </nav>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-coffee-dark mb-8">Контакты</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="text-xl font-bold mb-4">Наши контакты</h2>
+                <div class="space-y-4">
+                    <p><strong>Адрес:</strong> ул. Примерная, 123</p>
+                    <p><strong>Телефон:</strong> +996 (555) 123-456</p>
+                    <p><strong>Email:</strong> info@books.kg</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold mb-4">Режим работы</h2>
+                <div class="space-y-2">
+                    <p>Понедельник - Пятница: 10:00 - 20:00</p>
+                    <p>Суббота - Воскресенье: 11:00 - 19:00</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer class="bg-coffee-dark text-coffee-lightest py-12 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Книги</h3>
+                    <p class="text-coffee-light">Ваш уютный книжный магазин</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Контакты</h4>
+                    <p>Адрес: ул. Примерная, 123</p>
+                    <p>Телефон: +996 (555) 123-456</p>
+                    <p>Email: info@books.kg</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Мы в соцсетях</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-coffee-medium transition-colors">Instagram</a>
+                        <a href="#" class="hover:text-coffee-medium transition-colors">Facebook</a>
+                        <a href="#" class="hover:text-coffee-medium transition-colors">Telegram</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Режим работы</h4>
+                    <p>Пн-Пт: 10:00 - 20:00</p>
+                    <p>Сб-Вс: 11:00 - 19:00</p>
+                </div>
+            </div>
+            <div class="border-t border-coffee-medium mt-8 pt-8 text-center">
+                <p>&copy; 2024 Книги. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/mobile-menu.js"></script>
+</body>
+</html> 

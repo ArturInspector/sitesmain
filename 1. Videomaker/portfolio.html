@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Alihan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            opacity: 0.2;
+        }
+
+        .video-background.secondary {
+            opacity: 0.15;
+        }
+
+        .gradient-overlay {
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.98) 0%, 
+                rgba(26, 26, 26, 0.95) 50%,
+                rgba(10, 10, 10, 0.98) 100%);
+        }
+
+        .nav-gradient {
+            background: linear-gradient(to bottom,
+                rgba(10, 10, 10, 0.98) 0%,
+                rgba(26, 26, 26, 0.95) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-gradient {
+            background: linear-gradient(135deg,
+                rgba(10, 10, 10, 0.99) 0%,
+                rgba(26, 26, 26, 0.97) 100%);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-gradient {
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            transition: all 0.3s ease;
+        }
+
+        .hover-gradient:hover {
+            background: linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            aspect-ratio: 16/10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .portfolio-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0.7;
+        }
+
+        .portfolio-item:hover video {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, 
+                rgba(0,0,0,0.95) 0%, 
+                rgba(0,0,0,0.7) 50%,
+                transparent 100%);
+            opacity: 1;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            background: linear-gradient(to top, 
+                rgba(0,0,0,0.8) 0%, 
+                rgba(0,0,0,0.4) 50%,
+                transparent 100%);
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-item:hover .play-icon {
+            opacity: 1;
+        }
+
+        .category-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .category-button:hover::after {
+            width: 80%;
+        }
+
+        .category-button.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .category-button.active::after {
+            width: 80%;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Video Background -->
+    <video id="backgroundVideo" class="video-background" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/background/background_2.mp4" type="video/mp4">
+    </video>
+
+    <!-- Language Switcher -->
+    <div class="fixed bottom-8 right-8 z-50 flex space-x-4">
+        <button id="soundToggle" class="text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 px-4 py-2 rounded-full">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+        <button id="langSwitch" class="text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 px-4 py-2 rounded-full">
+            EN | RU
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 py-6 px-8 nav-gradient">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold">Alihan</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-gray-300 transition-colors" data-lang="nav-home">Главная</a>
+                <a href="portfolio.html" class="hover:text-gray-300 transition-colors" data-lang="nav-portfolio">Портфолио</a>
+                <a href="index.html#contact" class="hover:text-gray-300 transition-colors" data-lang="nav-contact">Контакты</a>
+            </div>
+            <!-- Мобильное меню -->
+            <button id="mobileMenuBtn" class="md:hidden text-white">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Мобильное меню -->
+        <div id="mobileMenu" class="md:hidden hidden absolute top-full left-0 w-full bg-black bg-opacity-95 py-4 px-8">
+            <div class="flex flex-col space-y-4">
+                <a href="index.html" class="hover:text-gray-300 transition-colors" data-lang="nav-home">Главная</a>
+                <a href="portfolio.html" class="hover:text-gray-300 transition-colors" data-lang="nav-portfolio">Портфолио</a>
+                <a href="index.html#contact" class="hover:text-gray-300 transition-colors" data-lang="nav-contact">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/audio/background2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Portfolio Section -->
+    <section class="min-h-screen pt-24 md:pt-32 pb-20">
+        <div class="container mx-auto px-4 md:px-8">
+            <h1 class="text-4xl md:text-7xl font-bold mb-6 md:mb-8 text-center fade-in" data-lang="portfolio-title">Портфолио</h1>
+            <p class="text-lg md:text-xl text-gray-400 text-center mb-8 md:mb-12 fade-in" data-lang="portfolio-subtitle">Профессиональная видеосъемка в Бишкеке</p>
+            
+            <!-- Categories -->
+            <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+                <button class="category-button px-6 md:px-8 py-2 md:py-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors" data-category="all" data-lang="portfolio-all">Все</button>
+                <button class="category-button px-6 md:px-8 py-2 md:py-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors" data-category="wedding" data-lang="portfolio-wedding">Свадьбы</button>
+                <button class="category-button px-6 md:px-8 py-2 md:py-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors" data-category="corporate" data-lang="portfolio-corporate">Корпоративные</button>
+                <button class="category-button px-6 md:px-8 py-2 md:py-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors" data-category="event" data-lang="portfolio-event">Мероприятия</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid">
+                <!-- Items will be added dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center">
+        <div class="relative w-full max-w-4xl mx-4">
+            <button onclick="closeVideoModal()" class="absolute -top-10 right-0 text-white hover:text-gray-300">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <video id="modalVideo" class="w-full rounded-lg" controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <script src="assets/js/portfolio.js"></script>
+</body>
+</html> 

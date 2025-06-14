@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KofiMood - Меню</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .menu-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+        }
+
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, 
+                rgba(146, 64, 14, 0.1) 0%,
+                rgba(146, 64, 14, 0.2) 50%,
+                rgba(146, 64, 14, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 1rem;
+        }
+
+        .menu-card:hover::after {
+            opacity: 1;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <!-- Шапка -->
+    <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-bold text-amber-900 dark:text-amber-100 hover:text-amber-700 dark:hover:text-amber-300 transition-colors">
+                    KofiMood ☕
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="nav-link text-amber-800 dark:text-amber-200 hover:text-amber-600 dark:hover:text-amber-400">
+                        Главная
+                    </a>
+                    <a href="quiz.html" class="nav-link text-amber-800 dark:text-amber-200 hover:text-amber-600 dark:hover:text-amber-400">
+                        Пройти тест
+                    </a>
+                    <a href="menu.html" class="nav-link text-amber-800 dark:text-amber-200 hover:text-amber-600 dark:hover:text-amber-400">
+                        Меню
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="theme-toggle fixed top-4 right-4 z-50">
+        <button id="themeToggle" class="p-2 rounded-full bg-amber-200 dark:bg-gray-700 hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+            </svg>
+        </button>
+    </div>
+
+    <main class="container mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-playfair font-bold text-amber-900 dark:text-amber-100 mb-4">
+                Наше особенное меню
+            </h1>
+            <p class="text-xl text-amber-800 dark:text-amber-200">
+                Уникальные рецепты от наших бариста в Бишкеке
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Карточка 1 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Лунный латте</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">350 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Эспрессо, миндальное молоко, сироп лаванды и съедобные серебряные блестки
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.9</span>
+                        <span>•</span>
+                        <span class="ml-2">Хит сезона</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 2 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Карамельный шторм</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">380 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Двойной эспрессо, карамельный соус, взбитые сливки и хрустящая карамельная крошка
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.8</span>
+                        <span>•</span>
+                        <span class="ml-2">Сладкоежкам</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Мятный взрыв</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">400 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Эспрессо, мятный сироп, шоколадная крошка и свежая мята
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.7</span>
+                        <span>•</span>
+                        <span class="ml-2">Освежающий</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 4 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Кокосовый рай</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">390 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Эспрессо, кокосовое молоко, кокосовая стружка и карамельный сироп
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.9</span>
+                        <span>•</span>
+                        <span class="ml-2">Тропический</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 5 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Ореховый каприз</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">370 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Эспрессо, фундучный сироп, миндальное молоко и дробленый фундук
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.8</span>
+                        <span>•</span>
+                        <span class="ml-2">Ореховый</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка 6 -->
+            <div class="menu-card group relative bg-white/50 dark:bg-gray-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-amber-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-playfair font-bold text-amber-900 dark:text-amber-100">Цитрусовый заряд</h3>
+                        <span class="text-amber-700 dark:text-amber-300 font-semibold">360 сом</span>
+                    </div>
+                    <p class="text-amber-800 dark:text-amber-200 mb-4">
+                        Эспрессо, апельсиновый сироп, цедра апельсина и корица
+                    </p>
+                    <div class="flex items-center text-sm text-amber-700 dark:text-amber-300">
+                        <span class="mr-2">⭐ 4.7</span>
+                        <span>•</span>
+                        <span class="ml-2">Бодрящий</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Переключатель темы
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        function setTheme(isDark) {
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Инициализация темы
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme === 'dark');
+        } else {
+            setTheme(prefersDark.matches);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(!isDark);
+        });
+
+        // Слушатель изменения системной темы
+        prefersDark.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches);
+            }
+        });
+    </script>
+</body>
+</html> 
